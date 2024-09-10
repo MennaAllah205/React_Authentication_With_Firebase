@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Container } from "react-bootstrap";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import SignUp from "./Components/SignUp";
+import Login from "./Components/Login";
+import ForgotPassword from "./Components/ForgotPassword";
+import UpdateProfile from "./Components/UpdateProfile";
+import Dashboard from "./Components/Dashboard";
+import AuthProvider from "./Context/AuthContext";
+import RequiredAuth from "./Context/RequiredAuth";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container
+      className="d-flex align-items-center justify-container-center"
+      style={{ minHeight: "100vh" }}
+    >
+      <div className="w-100" style={{ minWidth: "400px" }}>
+        <Router>
+          <AuthProvider>
+            <Routes>
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/update" element={<UpdateProfile />} />
+              <Route
+                path="/"
+                element={
+                  <RequiredAuth>
+                    <Dashboard />
+                  </RequiredAuth>
+                }
+              />
+            </Routes>
+          </AuthProvider>
+        </Router>
+      </div>
+    </Container>
   );
-}
+};
 
 export default App;
